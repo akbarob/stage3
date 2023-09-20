@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { blured } from "../utils/bluredData";
 
-const ImageMove = ({ image, index }) => {
+const ImageMove = ({ image, index, user }) => {
   const ref = useRef();
   const imgblur = blured;
   const type = "Image";
@@ -18,6 +18,7 @@ const ImageMove = ({ image, index }) => {
       index: index,
       accepts: type,
     },
+    disabled: true,
   });
   const styleDrop = {
     color: isOver ? "green" : undefined,
@@ -67,16 +68,27 @@ const ImageMove = ({ image, index }) => {
   );
 };
 
-export default function ImageList({ images }) {
+export default function ImageList({ images, user }) {
   const renderImage = (images, index) => {
     return images ? (
-      <ImageMove image={images} index={index} key={`${images.id}-image`} />
+      <ImageMove
+        image={images}
+        user={user}
+        index={index}
+        key={`${images.id}-image`}
+      />
     ) : null;
   };
 
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5 bg-black/10 p-8 rounded-lg">
-      {images?.map(renderImage)}
+      {images.length >= 1 ? (
+        images?.map(renderImage)
+      ) : (
+        <p className="text-rose-700 font-semibold text-2xl text-center">
+          No result on TAG searched
+        </p>
+      )}
     </section>
   );
 }

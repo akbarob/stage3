@@ -7,6 +7,7 @@ import Loading from "@/components/Loading";
 import { DndContext } from "@dnd-kit/core";
 import Navbar from "@/components/Navbar";
 import update from "immutability-helper";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const [user, setUser] = useState({});
@@ -33,28 +34,37 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center  p-4 md:p-10 gap-6 lg:gap-10 bg-gradient-to-r from-blue-200 via-rose-200 to-sky-500 ">
         <Navbar setSearch={setSearch} user={user} />
         <DndContext onDragEnd={handleDragEnd} id="hng">
-          <ImageList images={images} />
+          <ImageList images={images} user={user} />
         </DndContext>
       </main>
     );
 
   function handleDragEnd(event) {
     const { active, over } = event;
+    console.log(user);
 
     const dragIndex = user && active.data.current.index;
     const hoverIndex = user && over.data.current.index;
     const draggedImage = images[dragIndex];
-    if (over && over.data.current.accepts.includes(active.data.current.type)) {
-      // do stuff
-      setIsDropped(true);
-      setImages(
-        update(images, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, draggedImage],
-          ],
-        })
-      );
+    if (user) {
+      if (
+        over &&
+        over.data.current.accepts.includes(active.data.current.type)
+      ) {
+        // do stuff
+        setIsDropped(true);
+        setImages(
+          update(images, {
+            $splice: [
+              [dragIndex, 1],
+              [hoverIndex, 0, draggedImage],
+            ],
+          })
+        );
+      }
+    }
+    if (!user) {
+      toast.error("Login in to rearrange photos");
     }
   }
 }

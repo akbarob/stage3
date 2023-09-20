@@ -43,13 +43,13 @@ export default function Home() {
     const { active, over } = event;
     console.log(user);
 
-    const dragIndex = user && active.data.current.index;
-    const hoverIndex = user && over.data.current.index;
+    const dragIndex = user && active?.data?.current.index;
+    const hoverIndex = user && over?.data?.current.index;
     const draggedImage = images[dragIndex];
     if (user) {
       if (
         over &&
-        over.data.current.accepts.includes(active.data.current.type)
+        over?.data?.current?.accepts.includes(active?.data?.current.type)
       ) {
         // do stuff
         setIsDropped(true);

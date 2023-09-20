@@ -49,7 +49,7 @@ export default function Home() {
     if (user) {
       if (
         over &&
-        over?.data?.current?.accepts.includes(active?.data?.current.type)
+        over.data.current.accepts.includes(active.data.current.type)
       ) {
         // do stuff
         setIsDropped(true);
@@ -62,8 +62,7 @@ export default function Home() {
           })
         );
       }
-    }
-    if (!user) {
+    } else if (!user) {
       toast.error("Login in to rearrange photos");
     }
   }

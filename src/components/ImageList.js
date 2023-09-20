@@ -8,17 +8,12 @@ const ImageMove = ({ image, index, user }) => {
   const imgblur = blured;
   const type = "Image";
 
-  const {
-    isOver,
-    setNodeRef: drop,
-    over,
-  } = useDroppable({
+  const { isOver, setNodeRef: drop } = useDroppable({
     id: image.id,
     data: {
       index: index,
       accepts: type,
     },
-    disabled: true,
   });
   const styleDrop = {
     color: isOver ? "green" : undefined,

@@ -43,8 +43,8 @@ export default function Home() {
     const { active, over } = event;
     console.log(user);
 
-    const dragIndex = user && active?.data?.current.index;
-    const hoverIndex = user && over?.data?.current.index;
+    const dragIndex = active.data.current.index;
+    const hoverIndex = over.data.current.index;
     const draggedImage = images[dragIndex];
     if (user) {
       if (
